@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import NewExpense from './components/NewExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
@@ -25,16 +25,19 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+  const [expenseData, setExpenseData] = useState(expenses);
 
   const onNewExpenseHandler = (expense: any) => {
-    expenses.push(expense);
-    console.log(expenses)
+    setExpenseData((prevExpense => {
+      return [expense, ...prevExpense]
+    }))
   }
+
 
   return (
     <div>
       <NewExpense onAddExpense={onNewExpenseHandler}/>
-      <Expenses expenses={expenses}/>
+      <Expenses expenses={expenseData}/>
     </div>
   );
 }
